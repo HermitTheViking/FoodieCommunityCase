@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -16,12 +16,16 @@ import { environment } from '../environments/environment';
 import { LoginComponent } from './component/login/login.component';
 import { RegisterComponent } from './component/register/register.component';
 import { UserComponent } from './component/user/user.component';
+
 import { UserResolver } from './component/user/user.resolver';
 
-import { AuthService } from './shared/security/auth.service';
+import { AuthService } from './shared/services/auth.service';
 import { UserService } from './shared/services/user.service';
-import { AuthInterceptor } from './shared/security/auth.interceptor';
-import { AuthGuard } from './shared/security/auth.guard';
+import { RestService } from './shared/services/rest.service';
+
+import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
+
+import { AuthGuard } from './shared/guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -45,7 +49,8 @@ import { AuthGuard } from './shared/security/auth.guard';
     UserService,
     UserResolver,
     AuthGuard,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    RestService
   ],
   bootstrap: [AppComponent]
 })

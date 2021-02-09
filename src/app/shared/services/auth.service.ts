@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase';
@@ -45,6 +46,17 @@ export class AuthService {
         if (tmp === null) {
             return '';
         }
-        return JSON.parse(tmp).stsTokenManager.accessToken;
+
+        const user = JSON.parse(tmp);
+
+        // TODO: Refresh auth token
+        // const currentUser = firebase.auth().currentUser;
+        // if (currentUser != null) {
+        //     currentUser.getIdToken(false)
+        //     .then((idToken) => { console.log(idToken); })
+        //     .catch((error) => { console.log(error); });
+        // }
+
+        return user.stsTokenManager.accessToken;
     }
 }

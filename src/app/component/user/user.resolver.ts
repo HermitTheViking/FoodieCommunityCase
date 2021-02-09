@@ -23,11 +23,14 @@ export class UserResolver implements Resolve<FirebaseUserModel> {
                             user.image = 'assets/svg/person-circle.svg';
                             user.name = res.displayName;
                             user.provider = res.providerData[0].providerId;
+                            user.email = res.email;
+                            user.token = res.stsTokenManager.accessToken;
                         }
                         else {
                             user.image = res.photoURL;
                             user.name = res.displayName;
                             user.provider = res.providerData[0].providerId;
+                            user.email = res.email;
                         }
                     }
                     return resolve(user);

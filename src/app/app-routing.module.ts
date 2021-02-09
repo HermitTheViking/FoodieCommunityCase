@@ -5,7 +5,7 @@ import { LoginComponent } from './component/login/login.component';
 import { UserComponent } from './component/user/user.component';
 import { RegisterComponent } from './component/register/register.component';
 import { UserResolver } from './component/user/user.resolver';
-import { AuthGuard } from './shared/security/auth.guard';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
