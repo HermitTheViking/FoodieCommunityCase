@@ -1,23 +1,22 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase/app';
+import { TokenStorageService } from './token-storage.service';
 
 @Injectable()
 export class UserService {
-
     constructor(
-        public afAuth: AngularFireAuth
-    ) {}
+        private tokenStorage: TokenStorageService
+    ) { }
 
     getCurrentUser(): Promise<any> {
         return new Promise<any>((resolve, reject) => {
-            const tmp = localStorage.getItem('user');
+            const tmp = this.tokenStorage.getUser();
 
-            if (tmp === null || tmp === 'null') {
+            if (tmp === null) {
                 reject('No user logged in');
             }
             else {
-                resolve(JSON.parse(tmp));
+                resolve(tmp);
             }
         });
     }

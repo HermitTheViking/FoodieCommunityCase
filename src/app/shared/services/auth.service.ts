@@ -1,33 +1,58 @@
-import { formatDate } from '@angular/common';
 import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 import firebase from 'firebase';
+import { Observable } from 'rxjs';
+
+import { TokenStorageService } from './token-storage.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
-
     constructor(
-        public afAuth: AngularFireAuth,
+        private afAuth: AngularFireAuth,
+        private tokenStorage: TokenStorageService,
+        private router: Router,
         public ngZone: NgZone
-    ) {}
+    ) { }
 
-    doLogin(value: { email: string; password: string; }): Promise<firebase.auth.UserCredential> {
-        return firebase.auth().signInWithEmailAndPassword(value.email, value.password);
+    doLogin(value: { email: string; password: string; }): Promise<any> {
+        return firebase.auth().signInWithEmailAndPassword(value.email, value.password)
+            .then(login => {
+                login.user?.getIdTokenResult().then(token => {
+                    this.tokenStorage.saveToken(token.token);
+                });
+                this.tokenStorage.saveUser(login);
+                this.router.navigate(['/profile']);
+                return true;
+            },
+                err => {
+                    console.log('err ' + err);
+                    return err.message;
+                }
+            );
     }
 
     get isLoggedIn(): boolean {
-        const tmp = localStorage.getItem('user');
-        if (tmp === null) {
+        if (!!this.tokenStorage.getToken()) {
+            const user = this.tokenStorage.getUser();
+            return (user !== null && user.emailVerified !== false) ? true : false;
+        }
+        else {
             return false;
         }
-        const user = JSON.parse(tmp);
-        return (user !== null && user.emailVerified !== false) ? true : false;
     }
 
-    doRegister(value: { email: string; password: string; }): Promise<firebase.auth.UserCredential> {
-        return firebase.auth().createUserWithEmailAndPassword(value.email, value.password);
+    doRegister(value: { email: string; password: string; }): Promise<any> {
+        return firebase.auth().createUserWithEmailAndPassword(value.email, value.password).then(res => {
+            console.log(res);
+            this.doSendVerificationMail(res);
+            return 'Your account has been created';
+        }, err => {
+            console.log('err ' + err);
+            return err.message;
+        });
     }
 
     doSendVerificationMail(currentUser: firebase.auth.UserCredential): void {
@@ -36,27 +61,15 @@ export class AuthService {
         }
     }
 
-    doLogout(): Promise<void> {
-        localStorage.removeItem('user');
-        return this.afAuth.signOut();
-    }
-
-    getToken(): string {
-        const tmp = localStorage.getItem('user');
-        if (tmp === null) {
-            return '';
-        }
-
-        const user = JSON.parse(tmp);
-
-        // TODO: Refresh auth token
-        // const currentUser = firebase.auth().currentUser;
-        // if (currentUser != null) {
-        //     currentUser.getIdToken(false)
-        //     .then((idToken) => { console.log(idToken); })
-        //     .catch((error) => { console.log(error); });
-        // }
-
-        return user.stsTokenManager.accessToken;
+    doLogout(): Promise<any> {
+        this.tokenStorage.signOut();
+        return this.afAuth.signOut()
+            .then(
+                () => true,
+                err => {
+                    console.log('err ' + err);
+                    return err.message;
+                }
+            );
     }
 }

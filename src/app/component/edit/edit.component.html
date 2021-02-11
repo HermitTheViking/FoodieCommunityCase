@@ -1,0 +1,171 @@
+<div>
+    <div class="mt-10 sm:mt-0">
+        <div class="md:grid md:grid-cols-3 md:gap-6">
+            <div class="mt-5 md:mt-0 md:col-span-2">
+                <div class="md:col-span-1">
+                    <div class="px-4 sm:px-0">
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">Recip Information</h3>
+                    </div>
+                </div>
+                <form [formGroup]="recipForm" (ngSubmit)="doUpdateRecip(recipForm.value)">
+                    <div class="shadow overflow-hidden sm:rounded-md">
+                        <div class="px-4 py-5 bg-white sm:p-6">
+                            <div class="grid grid-cols-6 gap-6">
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label for="recipName" class="block text-sm font-medium text-gray-700">Name:
+                                        {{recip.name}}</label>
+                                    <input formControlName="recipName" id="recipName" type="text" required
+                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                </div>
+
+                                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                                    <label for="recipCountry" class="block text-sm font-medium text-gray-700">Country:
+                                        {{recip.country}}</label>
+                                    <input formControlName="recipCountry" id="recipCountry" type="text" required
+                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                </div>
+
+                                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                                    <label for="recipUnit" class="block text-sm font-medium text-gray-700">Unit:
+                                        {{recip.unit}}</label>
+                                    <input formControlName="recipUnit" id="recipUnit" type="text"
+                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                </div>
+
+                                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                                    <label for="recipHundredUnit"
+                                        class="block text-sm font-medium text-gray-700">Hundred
+                                        unit: {{recip.hundredUnit}}</label>
+                                    <input formControlName="recipHundredUnit" id="recipHundredUnit" type="text"
+                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                </div>
+
+                                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                                    <label for="recipPortionUnit"
+                                        class="block text-sm font-medium text-gray-700">Portion
+                                        unit: {{recip.portionUnit}}</label>
+                                    <input formControlName="recipPortionUnit" id="recipPortionUnit" type="text"
+                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                </div>
+
+                                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                                    <label for="recipQuantity" class="block text-sm font-medium text-gray-700">Quantity:
+                                        {{recip.quantity}}</label>
+                                    <input formControlName="recipQuantity" id="recipQuantity" type="text"
+                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                </div>
+
+                                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                                    <label for="recipPortionQuantity"
+                                        class="block text-sm font-medium text-gray-700">Portion quantity:
+                                        {{recip.portionQuantity}}</label>
+                                    <input formControlName="recipPortionQuantity" id="recipPortionQuantity" type="text"
+                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                </div>
+
+                                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                                    <label for="recipAlcoholByVolume"
+                                        class="block text-sm font-medium text-gray-700">Alcohol by volume:
+                                        {{recip.alcoholByVolume}}</label>
+                                    <input formControlName="recipAlcoholByVolume" id="recipAlcoholByVolume" type="text"
+                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                            <button type="submit"
+                                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                [disabled]="!recipForm.valid">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="hidden sm:block" aria-hidden="true">
+        <div class="py-5">
+            <div class="border-t border-gray-200"></div>
+        </div>
+    </div>
+
+    <div class="mt-10 sm:mt-0">
+        <div class="md:grid md:grid-cols-3 md:gap-6">
+            <div class="mt-5 md:mt-0 md:col-span-2">
+                <div class="md:col-span-1">
+                    <div class="px-4 sm:px-0">
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">Nutrient Information</h3>
+                    </div>
+                </div>
+                <form [formGroup]="nutrientInfoForm" (ngSubmit)="doUpdateNutrientInfo(nutrientInfoForm.value)">
+                    <div class="shadow overflow-hidden sm:rounded-md">
+                        <div class="px-4 py-5 bg-white sm:p-6">
+                            <div class="grid grid-cols-6 gap-6">
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label for="ionfoType" class="block text-sm font-medium text-gray-700">Type</label>
+                                    <select id="ionfoType" name="ionfoType"
+                                        class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                        <option>Protein</option>
+                                        <option>Carbohydrates</option>
+                                        <option>Energy</option>
+                                        <option>Energy kcal</option>
+                                        <option>Far</option>
+                                        <option>Fiber</option>
+                                        <option>Salt</option>
+                                        <option>Saturated fat</option>
+                                        <option>Sodium</option>
+                                        <option>Sugars</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label for="infoName" class="block text-sm font-medium text-gray-700">Name:
+                                        {{info.name}}</label>
+                                    <input formControlName="infoName" id="infoName" type="text"
+                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                </div>
+
+                                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                                    <label for="infoUnit" class="block text-sm font-medium text-gray-700">Unit:
+                                        {{info.unit}}</label>
+                                    <input formControlName="infoUnit" id="infoUnit" type="text"
+                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                </div>
+
+                                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                                    <label for="infoPerHundred" class="block text-sm font-medium text-gray-700">Hundred
+                                        unit: {{info.perHundred}}</label>
+                                    <input formControlName="infoPerHundred" id="infoPerHundred" type="text"
+                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                </div>
+
+                                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                                    <label for="infoPerPortion" class="block text-sm font-medium text-gray-700">Portion
+                                        unit: {{info.perPortion}}</label>
+                                    <input formControlName="infoPerPortion" id="infoPerPortion" type="text"
+                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                </div>
+
+                                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                                    <label for="infoPerDay" class="block text-sm font-medium text-gray-700">Quantity:
+                                        {{info.perDay}}</label>
+                                    <input formControlName="infoPerDay" id="infoPerDay" type="text"
+                                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                            <button type="submit"
+                                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                [disabled]="!nutrientInfoForm.valid">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
