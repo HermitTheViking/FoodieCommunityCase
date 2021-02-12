@@ -32,7 +32,7 @@ export class LoginComponent {
       .then(
         res => {
           this.isLoggedIn = res,
-          this.reloadPage();
+            this.reloadPage();
         },
         err => this.errorMessage = err
       );

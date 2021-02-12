@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { AuthService } from './shared/services/auth.service';
@@ -8,20 +9,41 @@ import { AuthService } from './shared/services/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   OpenTab = 2;
   Menu = true;
   Profile = true;
   isLoggedIn = false;
   errorMessage = '';
+  event$: any;
 
   constructor(
     private authService: AuthService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private location: Location
+  ) {
+    this.event$ = this.location.onUrlChange((val) => {
+      if (val === '/login') {
+        this.OpenTab = 3;
+      }
+      else if (val === '/register') {
+        this.OpenTab = 4;
+      }
+      else if (val === '/home' || val === '/edit' || val === '/add') {
+        this.OpenTab = 1;
+      }
+      else if (val === '/profile') {
+        this.OpenTab = 2;
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isLoggedIn;
+  }
+
+  ngOnDestroy(): void {
+    this.event$.unsubscribe();
   }
 
   doLogout(): void {
@@ -31,27 +53,5 @@ export class AppComponent implements OnInit {
         () => { this.router.navigate(['/login']), window.location.reload(); },
         err => this.errorMessage = err
       );
-  }
-
-  doToggleMenu(): void {
-    this.Menu = !this.Menu;
-  }
-
-  doToggleProfile(): void {
-    this.Profile = !this.Profile;
-  }
-
-  doGoToDashboard(): void {
-    this.router.navigate(['/home']);
-    this.OpenTab = 1;
-    this.Profile = true;
-    this.Menu = true;
-  }
-
-  doGoToProfile(): void {
-    this.router.navigate(['/profile']);
-    this.OpenTab = 2;
-    this.Profile = true;
-    this.Menu = true;
   }
 }

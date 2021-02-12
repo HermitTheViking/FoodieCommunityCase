@@ -2,7 +2,6 @@ import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import firebase from 'firebase';
-import { Observable } from 'rxjs';
 
 import { TokenStorageService } from './token-storage.service';
 
@@ -41,6 +40,23 @@ export class AuthService {
         }
         else {
             return false;
+        }
+    }
+
+    doGetNewToken(): void {
+        const user = firebase.auth().currentUser;
+        if (user !== null) {
+            user.getIdToken(true)
+            .then(
+                (idToken) => {
+                    this.tokenStorage.saveToken(idToken);
+                }
+            )
+            .catch(
+                (error) => {
+                    console.log(error);
+                }
+            );
         }
     }
 

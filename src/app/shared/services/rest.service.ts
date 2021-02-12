@@ -15,7 +15,7 @@ export class RestService {
 
   constructor(
     private http: HttpClient
-  ) {}
+  ) { }
 
   httpHeader = {
     headers: new HttpHeaders({
@@ -23,11 +23,14 @@ export class RestService {
     })
   };
 
-  public doUpdateCache(model: UpdateCacheModel): Observable<UpdateCacheModel> {
-    return this.http.put<UpdateCacheModel>(`${this.restUrl}foodrepo/updatecache`, JSON.stringify(model), this.httpHeader)
-      .pipe(
-        retry(1),
-        catchError(this.processError)
+  public doUpdateCache(model: UpdateCacheModel): void {
+    this.http.put<UpdateCacheModel>(`${this.restUrl}foodrepo/updatecache`, JSON.stringify(model), this.httpHeader)
+      .subscribe(
+        () => { },
+        (error) => {
+          console.log(error);
+          this.processError(error);
+        }
       );
   }
 
@@ -39,7 +42,7 @@ export class RestService {
       );
   }
 
-  public doGetRecipBy(id: number): Observable<RecipModel> {
+  public doGetRecipById(id: number): Observable<RecipModel> {
     return this.http.get<RecipModel>(`${this.restUrl}food/recip/${id}`)
     .pipe(
       retry(1),
@@ -47,27 +50,36 @@ export class RestService {
     );
   }
 
-  public doAddRecip(model: RecipModel): Observable<RecipModel> {
-    return this.http.post<RecipModel>(`${this.restUrl}food/recip`, JSON.stringify(model), this.httpHeader)
-    .pipe(
-      retry(1),
-      catchError(this.processError)
+  public doAddRecip(model: RecipModel): void {
+    this.http.post<RecipModel>(`${this.restUrl}food/recip`, JSON.stringify(model), this.httpHeader)
+    .subscribe(
+      () => { },
+      (error) => {
+        console.log(error);
+        this.processError(error);
+      }
     );
   }
 
-  public doUpdateRecip(id: number, model: RecipModel): Observable<RecipModel> {
-    return this.http.put<RecipModel>(`${this.restUrl}food/recip/${id}`, JSON.stringify(model), this.httpHeader)
-      .pipe(
-        retry(1),
-        catchError(this.processError)
+  public doUpdateRecip(id: number, model: RecipModel): void {
+    this.http.put<RecipModel>(`${this.restUrl}food/recip/${id}`, JSON.stringify(model), this.httpHeader)
+      .subscribe(
+        () => { },
+        (error) => {
+          console.log(error);
+          this.processError(error);
+        }
       );
   }
 
-  public doDeleteRecipById(id: number): Observable<RecipModel> {
-    return this.http.delete<RecipModel>(`${this.restUrl}food/recip/${id}`, this.httpHeader)
-      .pipe(
-        retry(1),
-        catchError(this.processError)
+  public doDeleteRecipById(id: number): void {
+    this.http.delete<RecipModel>(`${this.restUrl}food/recip/${id}`, this.httpHeader)
+      .subscribe(
+        () => { },
+        (error) => {
+          console.log(error);
+          this.processError(error);
+        }
       );
   }
 

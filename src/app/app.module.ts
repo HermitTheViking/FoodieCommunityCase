@@ -24,6 +24,7 @@ import { RestService } from './shared/services/rest.service';
 import { authInterceptorProviders } from './shared/interceptors/auth.interceptor';
 
 import { AuthGuard } from './shared/guards/auth.guard';
+import { AddComponent } from './component/add/add.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { AuthGuard } from './shared/guards/auth.guard';
     RegisterComponent,
     ProfileComponent,
     EditComponent,
-    DashboardComponent
+    DashboardComponent,
+    AddComponent
   ],
   imports: [
     BrowserModule,

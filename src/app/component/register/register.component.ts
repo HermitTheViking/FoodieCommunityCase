@@ -28,9 +28,9 @@ export class RegisterComponent {
 
   tryRegister(value: { email: string; password: string; }): void {
     this.authService.doRegister(value)
-    .then(
-      res => { this.successMessage = res, this.errorMessage = ''; },
-      err => { this.successMessage = '', this.errorMessage = err; }
-    );
+      .then(
+        res => { this.successMessage = res, this.errorMessage = ''; },
+        err => { this.successMessage = '', this.errorMessage = err; }
+      );
   }
 }

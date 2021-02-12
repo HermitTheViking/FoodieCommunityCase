@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { NutrientInfoModel, RecipModel } from 'src/app/shared/models/recip.model';
 import { RestService } from 'src/app/shared/services/rest.service';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
-  selector: 'app-edit',
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss']
+  selector: 'app-add',
+  templateUrl: './add.component.html',
+  styleUrls: ['./add.component.scss']
 })
-export class EditComponent implements OnInit {
+export class AddComponent implements OnInit {
   recipForm!: FormGroup;
   nutrientInfoForm!: FormGroup;
   recip: RecipModel = new RecipModel();
@@ -22,7 +22,6 @@ export class EditComponent implements OnInit {
     private userService: UserService,
     private restService: RestService,
     private fb: FormBuilder,
-    private route: ActivatedRoute,
     private router: Router
   ) { }
 
@@ -32,10 +31,6 @@ export class EditComponent implements OnInit {
         () => {
           this.router.navigate(['/login']);
         });
-
-    this.route.queryParams.subscribe(params => {
-      this.recip = JSON.parse(params.data);
-    });
 
     this.createFormRecip();
 
@@ -67,7 +62,7 @@ export class EditComponent implements OnInit {
     });
   }
 
-  doUpdateRecip(value: {
+  doAddRecip(value: {
     recipName: string,
     recipCountry: string,
     recipUnit: string,
@@ -104,10 +99,10 @@ export class EditComponent implements OnInit {
       this.recip.alcoholByVolume = value.recipAlcoholByVolume;
     }
 
-    this.restService.doUpdateRecip(this.recip.dbId, this.recip);
+    this.restService.doAddRecip(this.recip);
   }
 
-  doUpdateNutrientInfo(value: {
+  doAddNutrientInfo(value: {
     infoName: string,
     infoUnit: string,
     infoPerHundred: number,
@@ -204,3 +199,4 @@ export class EditComponent implements OnInit {
     this.createFormNutrientInfo();
   }
 }
+

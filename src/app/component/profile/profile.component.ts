@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { RestService } from 'src/app/shared/services/rest.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { TokenStorageService } from 'src/app/shared/services/token-storage.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 import { UpdateCacheModel } from 'src/app/shared/models/updateCache.model';
 
@@ -19,6 +20,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    private authService: AuthService,
     private restService: RestService,
     private tokenStorage: TokenStorageService,
     private fb: FormBuilder,
@@ -27,10 +29,10 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getCurrentUser()
-      .then(() => {},
-      err => {
-        this.router.navigate(['/login']);
-      });
+      .then(() => { },
+        err => {
+          this.router.navigate(['/login']);
+        });
 
     this.user = this.tokenStorage.getUser();
     this.createForm(this.user.name);
@@ -51,7 +53,11 @@ export class ProfileComponent implements OnInit {
   doUpdateCache(): void {
     const tmp = new UpdateCacheModel();
     tmp.PageNumer = 1;
-    tmp.PageSize = 2;
+    tmp.PageSize = 10;
     this.restService.doUpdateCache(tmp);
+  }
+
+  doUpdateToken(): void {
+    this.authService.doGetNewToken();
   }
 }
